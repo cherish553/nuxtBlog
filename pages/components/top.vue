@@ -1,5 +1,6 @@
 <template>
   <div :class="[{ topActive: changeTopColor }, 'top']">
+    <div class="home" @click="$router.push({ name: 'home' })">首页</div>
     <div class="w400">
       <el-input
         v-model="name"

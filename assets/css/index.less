@@ -104,7 +104,7 @@ body,
   top: 400px;
   position: absolute;
   height: auto;
-  background-color: #cccccc;
+  background-color: #F8F8F8;
   // rgb(255, 192, 0)
   padding: 60px 100px;
 }
@@ -158,7 +158,6 @@ body,
 
   .top {
     padding: 0 20px !important;
-    justify-content: center !important;
   }
 }
 
@@ -185,15 +184,17 @@ body,
 
 .box-card {
   .list {
-    padding:0 20px 10px;
+    padding: 0 20px 10px;
     border-bottom: 1px solid #E4E7ED;
 
     .one {
-      .flexs{
+      .flexs {
         display: flex;
         justify-content: flex-start;
-        flex-wrap: wrap;;
+        flex-wrap: wrap;
+        ;
       }
+
       .status {
         display: none;
         float: left;
@@ -202,14 +203,19 @@ body,
         font-size: 12px;
       }
 
-      .category:hover {
-        text-decoration: underline;
-      }
 
       .category {
+        span {
+          cursor: pointer;
+        }
+
+        span:hover {
+          text-decoration: underline;
+        }
+
         margin-top: 10px;
         float: left;
-        cursor: pointer;
+
         font-size: 12px;
         color: #b3bbc2;
         margin-right: 10px;
@@ -253,6 +259,7 @@ body,
     }
 
     .two {
+      display: inline-block;
       // float: left;
       cursor: pointer;
       margin-top: 10px;
@@ -305,7 +312,7 @@ body,
         line-height: 23px;
         text-align: center;
         background-color: rgb(49, 46, 46); //#4d0e9a
-        color: #cccccc;
+        color: #F8F8F8;
         // padding: 4px 6px;
         border-radius: 10px;
         font-size: 12px;
@@ -372,13 +379,13 @@ body,
   top: 0;
   height: 50px;
   width: 100%;
-  background-color: #cccccc;
+  background-color: #F8F8F8;
   position: fixed;
-  z-index: 100;
+  z-index: 2000;
   padding: 0 100px;
   box-sizing: border-box;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -390,8 +397,13 @@ body,
 .topActive {
   transition: .5s;
   background-color: black;
+  .home{
+    color:white
+  }
 }
-
+.home{
+  cursor: pointer;
+}
 .el-input.is-active .el-input__inner,
 .el-input__inner:focus {
   border-color: gray;
@@ -412,6 +424,9 @@ em {
 }
 
 .tag {
+  span:hover {
+    text-decoration: underline;
+  }
   margin-top: 10px;
   overflow: hidden;
   text-overflow: ellipsis;

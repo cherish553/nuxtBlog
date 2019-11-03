@@ -5,5 +5,7 @@ export default {
   // 根据文章类别id查询文章
   searchForCategoryId: data => http.post(`/article/searchForCategoryId`, data),
   // 根据文章标签id查询文章
-  searchFortagId: data => http.post(`/article/searchFortagId`, data)
+  searchFortagId: data => http.post(`/article/searchFortagId`, data),
+  // 根据文章id查询文章详情
+  searchForId: id => http.get(`/article/search/${id}`)
 }

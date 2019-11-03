@@ -56,23 +56,31 @@ export default {
       type: 0, // 0代表关键词 1代表文章类别 2代表文章标签
       name: '', // 关键字
       flag: true, // 防抖
-      dataList: []
+      dataList: [],
+      categoryList: [],
+      tagList: []
     }
   },
   computed: {
     // 替换文字
     searchList() {
       const reg = new RegExp(this.name)
-      return this.dataList.map(item => {
-        let types = type[this.type].map(items =>
-          item[items].replace(reg, `<em>${this.name}</em>`)
-        )
+      const dataList = this.dataList.map(item => {
+        let types = type[this.type].map(items => {
+          if (items === 'tagName')
+            return item[items].map(item => ({
+              ...item,
+              tagName: item.tagName.replace(reg, `<em>${this.name}</em>`)
+            }))
+          return item[items].replace(reg, `<em>${this.name}</em>`)
+        })
         types = types.reduce((pre, now, index) => {
           pre[type[this.type][index]] = now
           return pre
         }, {})
         return { ...item, ...types }
       })
+      return dataList
     }
   },
   watch: {
@@ -80,19 +88,25 @@ export default {
       handler(val) {
         this.open()
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   },
   // 获取文章类别和文章标签
-  async asyncData(context) {
-    const [{ data: categoryList }, { data: tagList }] = await getData()
-    return { categoryList, tagList }
-  },
+  // async asyncData(context) {
+  //   const [{ data: categoryList }, { data: tagList }] = await getData()
+  //   return { categoryList, tagList }
+  // },
   layout: 'home',
   mounted() {
-    this.open()
+    this.getData()
   },
   methods: {
+    async getData() {
+      const [{ data: categoryList }, { data: tagList }] = await getData()
+      this.categoryList = categoryList
+      this.tagList = tagList
+    },
     // 刚进入页面的时候触发
     open() {
       const name = this.$route.query.name
