@@ -46,9 +46,12 @@
         >
       </div>
     </el-card>
+    <div class="visitCount">访问总量:{{ count }}</div>
   </el-col>
 </template>
 <script>
+import { login } from '@/api'
+const { getVisitsCount } = login
 export default {
   props: {
     categoryList: {
@@ -62,6 +65,20 @@ export default {
       default() {
         return {}
       }
+    }
+  },
+  data() {
+    return {
+      count: 0
+    }
+  },
+  mounted() {
+    this.getVisitsCount()
+  },
+  methods: {
+    // 获取总访问量
+    async getVisitsCount() {
+      this.count = (await getVisitsCount()).visits
     }
   }
 }

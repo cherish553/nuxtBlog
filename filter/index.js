@@ -6,14 +6,12 @@ const changeDate = value => {
   ++month
   month = month < 10 ? '0' + month : month
   let day = time.getDate()
-  day = day < 10 ? '0' + day : ''
+  day = day < 10 ? '0' + day : day
   let hours = time.getHours()
   hours = hours < 10 ? '0' + hours : hours
   let minute = time.getMinutes()
   minute = minute < 10 ? '0' + minute : minute
-  let seconds = time.getSeconds()
-  seconds = seconds < 10 ? '0' + seconds : seconds
-  return `${year}-${month}-${day} ${hours}:${minute}:${seconds}`
+  return `${year}-${month}-${day} ${hours}:${minute}`
 }
 const filters = {
   changeDate

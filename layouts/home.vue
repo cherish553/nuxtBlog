@@ -1,9 +1,9 @@
 <template>
   <div style="height:100%">
     <div class="banner">
-      <img src="~assets/image/banner.jpg" alt />
+      <img src="~assets/image/timg2.jpeg" alt />
       <div>
-        <div class="logo">lkf-blob</div>
+        <div class="logo">lkf-blog</div>
         <div class="text">不能把世界让给你所鄙视的人</div>
       </div>
     </div>

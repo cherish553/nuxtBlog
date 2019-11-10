@@ -1,16 +1,50 @@
 <template>
   <div>
     <top />
-    <div class="container clearfix">
+    <div class="container clearfix" :class="{ background }">
       <div class="inner">
-        <el-col :sm="16">
+        <div class="inner-top">
+          <div class="star" @click="getArticleStar(data.id)">
+            <img src="@/assets/image/star.png" alt />
+            &nbsp;{{ data.star }}
+          </div>
+          <div v-if="data.visits" class="search">
+            <img src="@/assets/image/visits.png" alt />
+            &nbsp;&nbsp;{{ data.visits }}
+          </div>
+        </div>
+        <div class="mt5">文章创建时间：{{ data.creatTime | changeDate }}</div>
+        <div class="mt5">文章更新时间：{{ data.updateTime | changeDate }}</div>
+        <el-col :sm="13">
           <mavon-editor
-            :value="data.inner"
+            ref="mavon"
             code-style="dark"
+            :value="data.inner"
             :toolbars-flag="false"
             :subfield="false"
             default-open="preview"
           />
+        </el-col>
+        <el-col :sm="3">
+          <div class="external">
+            <div
+              class="navigationBar"
+              :class="[changeNavigationBar ? 'navigationFix' : '']"
+              @click="link"
+            >
+              <div
+                class="navigationBar-innner"
+                :style="
+                  changeNavigationBar
+                    ? {
+                        width: '12.5%'
+                      }
+                    : ''
+                "
+                v-html="inner"
+              ></div>
+            </div>
+          </div>
         </el-col>
         <right :tag-list="tagList" :category-list="categoryList" />
       </div>
@@ -21,16 +55,24 @@
 <script>
 import right from './components/right.vue'
 import top from './components/top.vue'
+import mixins from './mixins'
 import { login, home, search } from '@/api'
-const { postCategoryList, postTagList, getArticleStar, postArticleType } = home
+const {
+  postCategoryList,
+  postTagList,
+  getArticleStar,
+  postArticleType,
+  getArticleVisits
+} = home
 const { postArticleList } = login
 const { searchForId } = search
 export default {
-  layout: 'home',
   components: {
     top,
     right
   },
+  mixins: [mixins],
+  layout: 'home',
   data() {
     return {
       data: {},
@@ -63,37 +105,60 @@ export default {
         _ => (this.newList = _),
         _ => (this.hotList = _)
       ],
-      type: ['dataList', 'topList', 'newList', 'hotList']
+      type: ['dataList', 'topList', 'newList', 'hotList'],
+      inner: '',
+      changeNavigationBar: false
     }
   },
   async mounted() {
+    window.addEventListener('scroll', this.scroll)
+    this.getArticleVisits(this.$route.query.id)
     this.searchForId()
-    // console.log(document.body.scrollHeight)
-    // console.log(document.body.scrollTop)
     await this.request()
     Array.from(new Array(3).keys()).forEach(item => this.postArticleType(item))
   },
+  destroyed() {
+    window.removeEventListener('scroll', this.scroll) //  离开页面清除（移除）滚轮滚动事件
+  },
   methods: {
+    scroll() {
+      this.changeNavigationBar = document.documentElement.scrollTop >= 500
+    },
+    // 文章增加访问量
+    async getArticleVisits(id) {
+      await getArticleVisits(id)
+    },
+    // 点赞文章
+    async getArticleStar(id) {
+      if (!this.flag)
+        return this.$message.warning('您请求的过于频繁，请稍后再试')
+      this.flag = false
+      await getArticleStar(id)
+      this.$message.success('感谢您的点赞')
+      this.flag = true
+      this.data.star++
+    },
     // 根据文章id查询文章
     async searchForId() {
       this.data = await searchForId(this.$route.query.id)
+      await this.$nextTick()
+      this.inner = document
+        .querySelectorAll('.v-show-content')[0]
+        .innerHTML.match(/[<][h][0-9][>].*[<][/][h][0-9][>]/g)
+        .join('<br/>')
     },
-    // 监听页面滚动事件
-    async scroll(e) {
-      if (this.activeName !== '0') return
-      if (!this.listFlag) return
-      if (
-        document.documentElement.scrollTop +
-          document.documentElement.clientHeight <
-        document.documentElement.scrollHeight - 100
-      )
-        return
-      const dataList = this.dataList
-      if (dataList.data.length >= dataList.total) return
-      this.pagination.page++
-      this.listFlag = false
-      await this.list()
-      this.listFlag = true
+    // 链接标签
+    link(e) {
+      const tag = e.target
+      if (tag.tagName.search(/[H]/) === -1) return
+      const id = Array.from(tag.childNodes)
+        .filter(item => item.id)
+        .map(item => item.id)[0]
+      const node = document.getElementById(`${id}`).parentNode
+      node.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
     },
     // 根据文章type获取对应文章
     async postArticleType(type) {
@@ -110,25 +175,6 @@ export default {
         this.postTagList()
       ])
       return true
-    },
-    // 点赞文章
-    async getArticleStar(id) {
-      if (!this.flag)
-        return this.$message.warning('您请求的过于频繁，请稍后再试')
-      this.flag = false
-      await getArticleStar(id)
-      this.$message.success('感谢您的点赞')
-      this.flag = true
-      try {
-        let data = this[this.type[parseInt(this.activeName)]]
-        if (data.data) data = data.data
-        data.forEach(item => {
-          if (item.id === id) {
-            item.star = item.star + 1
-            throw new Error('1')
-          }
-        })
-      } catch (err) {}
     },
     // 获取标签列表
     async postTagList() {

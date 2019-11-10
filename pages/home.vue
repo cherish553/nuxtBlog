@@ -1,7 +1,7 @@
 <template>
   <div>
     <top />
-    <div class="container clearfix">
+    <div :class="{ background }" class="container clearfix">
       <div class="inner">
         <el-col :sm="16">
           <el-card>
@@ -74,16 +74,18 @@
 import card from './components/card.vue'
 import right from './components/right.vue'
 import top from './components/top.vue'
+import mixins from './mixins'
 import { login, home } from '@/api'
 const { postCategoryList, postTagList, getArticleStar, postArticleType } = home
-const { postArticleList } = login
+const { postArticleList, getAddVistis } = login
 export default {
-  layout: 'home',
   components: {
     card,
     top,
     right
   },
+  mixins: [mixins],
+  layout: 'home',
   data() {
     return {
       listFlag: true,
@@ -119,8 +121,6 @@ export default {
   },
   async mounted() {
     window.addEventListener('scroll', this.scroll)
-    // console.log(document.body.scrollHeight)
-    // console.log(document.body.scrollTop)
     await this.request()
     Array.from(new Array(3).keys()).forEach(item => this.postArticleType(item))
   },
@@ -142,8 +142,7 @@ export default {
       if (dataList.data.length >= dataList.total) return
       this.pagination.page++
       this.listFlag = false
-      await this.list()
-      this.listFlag = true
+      if (await this.list()) this.listFlag = true
     },
     // 根据文章type获取对应文章
     async postArticleType(type) {
@@ -157,7 +156,8 @@ export default {
       await Promise.all([
         this.list(),
         this.postCategoryList(),
-        this.postTagList()
+        this.postTagList(),
+        this.getAddVistis()
       ])
       return true
     },
@@ -191,8 +191,14 @@ export default {
         ...this.form,
         ...this.pagination
       })
+      if (!data.length) return false
       this.dataList.data.push(...data)
       if (!this.dataList.total) this.dataList.total = total
+      return true
+    },
+    // 网站访问量增加
+    async getAddVistis() {
+      await getAddVistis()
       return true
     },
     // 获取文章类别

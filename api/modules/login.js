@@ -15,5 +15,9 @@ export default {
       ...rest,
       categoryId: categoryId.join(','),
       tagId: tagId.join(',')
-    })
+    }),
+  // 获取总访问量
+  getVisitsCount: _ => http.get(`/user/getVisitsCount`),
+  // 网站访问量增加
+  getAddVistis: _ => http.get(`/user/getAddVistis`)
 }

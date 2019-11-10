@@ -12,6 +12,8 @@ export default {
     }),
   // 点赞文章
   getArticleStar: id => http.get(`/article/star/${id}`),
+  // 文章增加访问量
+  getArticleVisits: id => http.get(`/article/visits/${id}`),
   // 根据type获取对应文章
   postArticleType: type => http.get(`/article/filter/${type}`)
 }
