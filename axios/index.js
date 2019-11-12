@@ -15,7 +15,7 @@ import axios from 'axios'
 // process.env.NODE_ENV === 'development'
 //   ? (axios.defaults.baseURL = `/api`)
 //   : (axios.defaults.baseURL = process.env.VUE_APP_BaseUrl)
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'http://www.cherish553.cn/'
 // 请求拦截器
 // axios.interceptors.request.use(
 //   (config) => {

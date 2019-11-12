@@ -17,6 +17,9 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
+  server: {
+    port: 4000 // default: 3000
+  },
   /*
    ** Customize the progress-bar color
    */
@@ -52,7 +55,6 @@ module.exports = {
       '@nuxtjs/dotenv',
       { path: './env', filename: `.env.${process.env.NODE_ENV}` }
     ]
-    // '@nuxtjs/proxy'
   ],
   proxy: {
     // With options
