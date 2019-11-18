@@ -1,4 +1,10 @@
+import common from '@/common'
+const { request } = common
 export default {
+  async asyncData() {
+    const [{ data: categoryList }, { data: tagList }] = await request()
+    return { tagList, categoryList }
+  },
   data() {
     return {
       background: false

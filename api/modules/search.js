@@ -1,4 +1,4 @@
-import { http } from '@/axios'
+import http from '@/axios'
 export default {
   // 获取文章分类
   searchForName: data => http.post(`/article/searchForName`, data),

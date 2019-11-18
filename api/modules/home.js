@@ -1,4 +1,4 @@
-import { http } from '@/axios'
+import http from '@/axios'
 export default {
   // 获取文章分类
   postCategoryList: ({ page, size, ...rest }) =>

@@ -57,13 +57,7 @@ import right from './components/right.vue'
 import top from './components/top.vue'
 import mixins from './mixins'
 import { login, home, search } from '@/api'
-const {
-  postCategoryList,
-  postTagList,
-  getArticleStar,
-  postArticleType,
-  getArticleVisits
-} = home
+const { getArticleStar, postArticleType, getArticleVisits } = home
 const { postArticleList } = login
 const { searchForId } = search
 export default {
@@ -80,8 +74,6 @@ export default {
       listFlag: true,
       typeList: [],
       flag: true, // 防抖
-      categoryList: [],
-      tagList: [],
       dataList: {
         total: 0,
         data: []
@@ -169,17 +161,8 @@ export default {
     },
     // 初始进入页面请求数据
     async request() {
-      await Promise.all([
-        this.list(),
-        this.postCategoryList(),
-        this.postTagList()
-      ])
+      await Promise.all([this.list()])
       return true
-    },
-    // 获取标签列表
-    async postTagList() {
-      const { data } = await postTagList({ page: 1, size: 99, name: '' })
-      return (this.tagList = data)
     },
     // 获取全部文章
     async list() {
@@ -190,11 +173,6 @@ export default {
       this.dataList.data.push(...data)
       if (!this.dataList.total) this.dataList.total = total
       return true
-    },
-    // 获取文章类别
-    async postCategoryList() {
-      const { data } = await postCategoryList({ page: 1, size: 99, name: '' })
-      return (this.categoryList = data)
     },
     // 点击tab触发
     tabClick(tab, event) {

@@ -56,25 +56,24 @@ module.exports = {
       { path: './env', filename: `.env.${process.env.NODE_ENV}` }
     ]
   ],
-  proxy: {
-    // With options
-    '/api': {
-      target: 'http://127.0.0.1:7001',
-      changeOrigin: true, // 表示是否跨域
-      pathRewrite: {
-        '/api': '' // 把 /api 替换成 /
-      }
-    }
-  },
+  // proxy: {
+  //   '/api': {
+  //     target: 'http://127.0.0.1:7001/',
+  //     changeOrigin: true, // 表示是否跨域
+  //     pathRewrite: {
+  //       '/api': '' // 把 /api 替换成 /
+  //     }
+  //   }
+  // },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {
-    proxy: true // 表示开启代理
-    // prefix: '/api', // 表示给请求url加个前缀 /api
-    // credentials: true // 表示跨域请求时是否需要使用凭证
-  },
+  // axios: {
+  //   proxy: true // 表示开启代理
+  //   // prefix: '/api', // 表示给请求url加个前缀 /api
+  //   // credentials: true // 表示跨域请求时是否需要使用凭证
+  // },
 
   /*
    ** Build configuration

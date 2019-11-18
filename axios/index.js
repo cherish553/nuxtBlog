@@ -1,7 +1,10 @@
 import axios from 'axios'
 // import { Message, Loading } from 'element-ui'
 // import Qs from 'qs'
-
+const http = axios.create({
+  baseURL: process.env.baseUrl
+})
+console.log(process.env.baseUrl)
 // 提示错误信息
 // const log = (type) => (message) =>
 //   Message({
@@ -15,7 +18,6 @@ import axios from 'axios'
 // process.env.NODE_ENV === 'development'
 //   ? (axios.defaults.baseURL = `/api`)
 //   : (axios.defaults.baseURL = process.env.VUE_APP_BaseUrl)
-axios.defaults.baseURL = 'http://www.cherish553.cn/'
 // 请求拦截器
 // axios.interceptors.request.use(
 //   (config) => {
@@ -47,7 +49,7 @@ axios.defaults.baseURL = 'http://www.cherish553.cn/'
 // )
 
 // 响应拦截器
-axios.interceptors.response.use(
+http.interceptors.response.use(
   response => {
     // loading.close()
     const res = response.data
@@ -61,6 +63,9 @@ axios.interceptors.response.use(
     }
   },
   error => {
+    // console.log(error)
+    // console.log(error.response)
+    console.log(111111111111)
     // loading.close()
     if (error && error.response) {
       switch (error.response.status) {
@@ -105,4 +110,4 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-export const http = axios
+export default http

@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import mixins from './mixins'
 import card from './components/card.vue'
 import right from './components/right.vue'
 import top from './components/top.vue'
@@ -38,12 +39,7 @@ const type = [
   ['categoryName'],
   ['tagName']
 ]
-const getData = () =>
-  Promise.all([
-    postCategoryList({ page: 1, size: 99, name: '' }),
-    postTagList({ page: 1, size: 99, name: '' })
-  ])
-const { postCategoryList, postTagList, getArticleStar } = home
+const { getArticleStar } = home
 const { searchForName, searchForCategoryId, searchFortagId } = search
 export default {
   components: {
@@ -51,14 +47,13 @@ export default {
     top,
     right
   },
+  mixins: [mixins],
   data() {
     return {
       type: 0, // 0代表关键词 1代表文章类别 2代表文章标签
       name: '', // 关键字
       flag: true, // 防抖
-      dataList: [],
-      categoryList: [],
-      tagList: []
+      dataList: []
     }
   },
   computed: {
@@ -92,21 +87,9 @@ export default {
       immediate: true
     }
   },
-  // 获取文章类别和文章标签
-  // async asyncData(context) {
-  //   const [{ data: categoryList }, { data: tagList }] = await getData()
-  //   return { categoryList, tagList }
-  // },
   layout: 'home',
-  mounted() {
-    this.getData()
-  },
+  mounted() {},
   methods: {
-    async getData() {
-      const [{ data: categoryList }, { data: tagList }] = await getData()
-      this.categoryList = categoryList
-      this.tagList = tagList
-    },
     // 刚进入页面的时候触发
     open() {
       const name = this.$route.query.name

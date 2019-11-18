@@ -76,7 +76,8 @@ import right from './components/right.vue'
 import top from './components/top.vue'
 import mixins from './mixins'
 import { login, home } from '@/api'
-const { postCategoryList, postTagList, getArticleStar, postArticleType } = home
+
+const { getArticleStar, postArticleType } = home
 const { postArticleList, getAddVistis } = login
 export default {
   components: {
@@ -91,8 +92,6 @@ export default {
       listFlag: true,
       typeList: [],
       flag: true, // 防抖
-      categoryList: [],
-      tagList: [],
       dataList: {
         total: 0,
         data: []
@@ -109,7 +108,7 @@ export default {
       },
       pagination: {
         page: 1,
-        size: 10
+        size: 99
       },
       articleType: [
         _ => (this.topList = _),
@@ -119,6 +118,7 @@ export default {
       type: ['dataList', 'topList', 'newList', 'hotList']
     }
   },
+
   async mounted() {
     window.addEventListener('scroll', this.scroll)
     await this.request()
@@ -153,12 +153,7 @@ export default {
     },
     // 初始进入页面请求数据
     async request() {
-      await Promise.all([
-        this.list(),
-        this.postCategoryList(),
-        this.postTagList(),
-        this.getAddVistis()
-      ])
+      await Promise.all([this.list(), this.getAddVistis()])
       return true
     },
     // 点赞文章
@@ -180,11 +175,6 @@ export default {
         })
       } catch (err) {}
     },
-    // 获取标签列表
-    async postTagList() {
-      const { data } = await postTagList({ page: 1, size: 99, name: '' })
-      return (this.tagList = data)
-    },
     // 获取全部文章
     async list() {
       const { data, total } = await postArticleList({
@@ -200,11 +190,6 @@ export default {
     async getAddVistis() {
       await getAddVistis()
       return true
-    },
-    // 获取文章类别
-    async postCategoryList() {
-      const { data } = await postCategoryList({ page: 1, size: 99, name: '' })
-      return (this.categoryList = data)
     },
     // 点击tab触发
     tabClick(tab, event) {

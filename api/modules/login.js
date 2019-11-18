@@ -1,4 +1,4 @@
-import { http } from '@/axios'
+import http from '@/axios'
 export default {
   index: data => http.post(`/user/login`, data),
   // 添加总体访问量
