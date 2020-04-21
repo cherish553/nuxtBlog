@@ -29,11 +29,11 @@
 </template>
 
 <script>
+import { home, search } from '@/api'
 import mixins from './mixins'
 import card from './components/card.vue'
 import right from './components/right.vue'
 import top from './components/top.vue'
-import { home, search } from '@/api'
 const type = [
   ['title', 'tagName', 'categoryName'],
   ['categoryName'],

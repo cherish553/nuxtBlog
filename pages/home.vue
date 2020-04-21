@@ -2,7 +2,7 @@
   <div>
     <top />
     <div :class="{ background }" class="container clearfix">
-      <div class="inner">
+      <div class="inner clearfix">
         <el-col :sm="16">
           <el-card>
             <el-tabs v-model="activeName" @tab-click="tabClick">
@@ -66,6 +66,7 @@
         </el-col>
         <right :tag-list="tagList" :category-list="categoryList" />
       </div>
+      <div class="keepOnRecord" @click="jump">鲁ICP备19052524号-1</div>
     </div>
   </div>
 </template>
@@ -128,6 +129,9 @@ export default {
     window.removeEventListener('scroll', this.scroll) //  离开页面清除（移除）滚轮滚动事件
   },
   methods: {
+    jump() {
+      window.location.href = 'http://beian.miit.gov.cn'
+    },
     // 监听页面滚动事件
     async scroll(e) {
       if (this.activeName !== '0') return

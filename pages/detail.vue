@@ -53,10 +53,10 @@
 </template>
 
 <script>
+import { login, home, search } from '@/api'
 import right from './components/right.vue'
 import top from './components/top.vue'
 import mixins from './mixins'
-import { login, home, search } from '@/api'
 const { getArticleStar, postArticleType, getArticleVisits } = home
 const { postArticleList } = login
 const { searchForId } = search

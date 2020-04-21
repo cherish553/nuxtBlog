@@ -3,7 +3,7 @@
     <div class="banner">
       <img src="~assets/image/timg2.jpeg" alt />
       <div>
-        <div class="logo">lkf-blog</div>
+        <div class="logo">李可凡 个人笔记</div>
         <div class="text">不能把世界让给你所鄙视的人</div>
       </div>
     </div>

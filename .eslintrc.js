@@ -25,6 +25,8 @@ module.exports = {
     'no-return-assign': 'off',
     'no-unreachable': 'off',
     'no-unused-expressions': 'off',
-    'camelcase': 'off'
+    'camelcase': 'off',
+    'import/order':'off'
+
   }
 }
