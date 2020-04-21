@@ -72,11 +72,11 @@
 </template>
 
 <script>
+import { login, home } from '@/api'
 import card from './components/card.vue'
 import right from './components/right.vue'
 import top from './components/top.vue'
 import mixins from './mixins'
-import { login, home } from '@/api'
 
 const { getArticleStar, postArticleType } = home
 const { postArticleList, getAddVistis } = login
