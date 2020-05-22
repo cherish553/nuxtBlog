@@ -1,7 +1,7 @@
 <template>
   <div :class="[{ topActive: changeTopColor }, 'top']">
     <div class="home">
-      <span @click="$router.push({ name: 'home' })">首页</span>
+      <span @click="$router.push({ name: 'index' })">首页</span>
       <span @click="openLink(' https://github.com/cherish553')">github</span>
       <span @click="openLink('https://www.hanchunrun.cn/#/')">rain</span>
       <span @click="openLink('https://juejin.im/user/57d7d1f50e3dd90069eb9480')"
@@ -11,12 +11,12 @@
     <div class="w400">
       <el-input
         v-model="name"
+        @keyup.native.enter="search"
         size="small"
         clearable
         placeholder="请填写文章名称"
-        @keyup.native.enter="search"
       >
-        <i slot="suffix" class="el-icon-search" @click="search"></i>
+        <i slot="suffix" @click="search" class="el-icon-search"></i>
       </el-input>
     </div>
   </div>

@@ -8,8 +8,6 @@
         <el-tag
           v-for="item in categoryList"
           :key="item.id"
-          type="info"
-          class="text item"
           @click="
             $router.push({
               name: 'search',
@@ -19,6 +17,8 @@
               }
             })
           "
+          type="info"
+          class="text item"
           >{{ item.name }}</el-tag
         >
       </div>
@@ -31,8 +31,6 @@
         <el-tag
           v-for="item in tagList"
           :key="item.id"
-          type="info"
-          class="text item"
           @click="
             $router.push({
               name: 'search',
@@ -42,6 +40,8 @@
               }
             })
           "
+          type="info"
+          class="text item"
           >{{ item.name }}</el-tag
         >
       </div>

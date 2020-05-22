@@ -4,7 +4,6 @@ import axios from 'axios'
 const http = axios.create({
   baseURL: process.env.baseUrl
 })
-console.log(process.env.baseUrl)
 // 提示错误信息
 // const log = (type) => (message) =>
 //   Message({
@@ -65,7 +64,6 @@ http.interceptors.response.use(
   error => {
     // console.log(error)
     // console.log(error.response)
-    console.log(111111111111)
     // loading.close()
     if (error && error.response) {
       switch (error.response.status) {

@@ -3,7 +3,7 @@
     <div v-for="item in dataList" :key="item.id" class="list">
       <div class="one">
         <div class="flexs">
-          <slot name="type" :item="item"></slot>
+          <slot :item="item" name="type"></slot>
           <div class="category">
             分类：<span
               @click="
@@ -39,7 +39,6 @@
         <div class="time">更新时间 : {{ item.updateTime | changeDate }}</div>
       </div>
       <div
-        class="two"
         @click="
           $router.push({
             name: 'detail',
@@ -49,14 +48,14 @@
           })
         "
         v-html="item.title"
+        class="two"
       ></div>
       <div class="three">
-        <div class="star" @click="$emit('on-result-change', item.id)">
+        <div @click="$emit('on-result-change', item.id)" class="star">
           <img src="@/assets/image/star.png" alt />
           &nbsp;{{ item.star }}
         </div>
         <div
-          class="read"
           @click="
             $router.push({
               name: 'detail',
@@ -65,6 +64,7 @@
               }
             })
           "
+          class="read"
         >
           阅读全文 >>
         </div>

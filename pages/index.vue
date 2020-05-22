@@ -66,7 +66,7 @@
         </el-col>
         <right :tag-list="tagList" :category-list="categoryList" />
       </div>
-      <div class="keepOnRecord" @click="jump">鲁ICP备19052524号-1</div>
+      <div @click="jump" class="keepOnRecord">鲁ICP备19052524号-1</div>
     </div>
   </div>
 </template>

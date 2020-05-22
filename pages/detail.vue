@@ -1,10 +1,10 @@
 <template>
   <div>
     <top />
-    <div class="container clearfix" :class="{ background }">
+    <div :class="{ background }" class="container clearfix">
       <div class="inner">
         <div class="inner-top">
-          <div class="star" @click="getArticleStar(data.id)">
+          <div @click="getArticleStar(data.id)" class="star">
             <img src="@/assets/image/star.png" alt />
             &nbsp;{{ data.star }}
           </div>
@@ -18,22 +18,21 @@
         <el-col :sm="13">
           <mavon-editor
             ref="mavon"
-            code-style="dark"
             :value="data.inner"
             :toolbars-flag="false"
             :subfield="false"
+            code-style="dark"
             default-open="preview"
           />
         </el-col>
         <el-col :sm="3">
           <div class="external">
             <div
-              class="navigationBar"
               :class="[changeNavigationBar ? 'navigationFix' : '']"
               @click="link"
+              class="navigationBar"
             >
               <div
-                class="navigationBar-innner"
                 :style="
                   changeNavigationBar
                     ? {
@@ -42,6 +41,7 @@
                     : ''
                 "
                 v-html="inner"
+                class="navigationBar-innner"
               ></div>
             </div>
           </div>
