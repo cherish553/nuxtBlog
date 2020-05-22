@@ -34,8 +34,8 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/filter',
-    { src: '~/plugins/mavon-editor', ssr: false },
-    { src: '~/plugins/route', ssr: true }
+    { src: '~/plugins/mavon-editor', ssr: false }
+    // { src: '~/plugins/route', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
